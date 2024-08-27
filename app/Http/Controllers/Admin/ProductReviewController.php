@@ -9,14 +9,15 @@ class ProductReviewController extends Controller
 {
     public function index()
     {
-        $result['data']=
+        /*$result['data']=
                 DB::table('product_review')
                 ->leftJoin('customers','customers.id','=','product_review.customer_id')
                 ->leftJoin('products','products.id','=','product_review.products_id')
                 ->orderBy('product_review.added_on','desc')
                 ->select('product_review.id','product_review.rating','product_review.review','product_review.added_on','customers.name','products.name as pname','product_review.status')
                 ->get();
-        return view('admin.product_review',$result);
+        return view('admin.product_review',$result);*/
+        return view('admin.product_review');
     }    
 
     

@@ -12,9 +12,11 @@ class OrderController extends Controller
         $result['orders']=DB::table('orders')
         ->select('orders.*','orders_status.orders_status')
         ->leftJoin('orders_status','orders_status.id','=','orders.order_status')
-        ->get();   
+        ->get();
+        // die("ahello world");
+        // prx($result);
         return view('admin.order',$result);
-    }    
+    }
 
     public function order_detail(Request $request,$id)
     {
@@ -33,9 +35,9 @@ class OrderController extends Controller
         $result['orders_status']=
             DB::table('orders_status')
             ->get();
-        $result['payment_status']=['Pending','Success','Fail'];      
+        $result['payment_status']=['Pending','Success','Fail'];
         return view('admin.order_detail',$result);
-    } 
+    }
 
     public function update_payemnt_status(Request $request,$status,$id)
     {
@@ -43,7 +45,7 @@ class OrderController extends Controller
         ->where(['id'=>$id])
         ->update(['payment_status'=>$status]);
         return redirect('/admin/order_detail/'.$id);
-    } 
+    }
 
     public function update_order_status(Request $request,$status,$id)
     {
@@ -51,7 +53,7 @@ class OrderController extends Controller
         ->where(['id'=>$id])
         ->update(['order_status'=>$status]);
         return redirect('/admin/order_detail/'.$id);
-    } 
+    }
 
     public function update_track_detail(Request $request,$id)
     {
@@ -60,8 +62,8 @@ class OrderController extends Controller
         ->where(['id'=>$id])
         ->update(['track_details'=>$track_details]);
         return redirect('/admin/order_detail/'.$id);
-    } 
-    
-    
-    
+    }
+
+
+
 }

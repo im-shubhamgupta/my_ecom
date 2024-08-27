@@ -12,15 +12,16 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $result['data']=Category::all();
-        return view('admin/category',$result);
+        // $result['data']=Category::all();
+        // return view('admin/category',$result);
+        return view('admin/category');
     }
 
-    
+
     public function manage_category(Request $request,$id='')
     {
         if($id>0){
-            $arr=Category::where(['id'=>$id])->get(); 
+            $arr=Category::where(['id'=>$id])->get();
 
             $result['category_name']=$arr['0']->category_name;
             $result['category_slug']=$arr['0']->category_slug;
@@ -44,7 +45,7 @@ class CategoryController extends Controller
             $result['id']=0;
 
             $result['category']=DB::table('categories')->where(['status'=>1])->get();
-            
+
         }
 
         return view('admin/manage_category',$result);
@@ -53,11 +54,11 @@ class CategoryController extends Controller
     public function manage_category_process(Request $request)
     {
         //return $request->post();
-        
+
         $request->validate([
             'category_name'=>'required',
             'category_image'=>'mimes:jpeg,jpg,png',
-            'category_slug'=>'required|unique:categories,category_slug,'.$request->post('id'),   
+            'category_slug'=>'required|unique:categories,category_slug,'.$request->post('id'),
         ]);
 
         if($request->post('id')>0){
@@ -94,7 +95,7 @@ class CategoryController extends Controller
         $model->save();
         $request->session()->flash('message',$msg);
         return redirect('admin/category');
-        
+
     }
 
     public function delete(Request $request,$id){
@@ -112,7 +113,7 @@ class CategoryController extends Controller
         return redirect('admin/category');
     }
 
-    
 
-    
+
+
 }

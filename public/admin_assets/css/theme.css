@@ -14665,3 +14665,34 @@ section {
     background-color: white;
     padding: 30px;
 }
+/* Admin panel side bar ui changes*/
+/*
+.menu-sidebar {
+    width: 206px;
+}
+.navbar-sidebar {
+    padding: 35px 3px 35px 11px;
+    padding-bottom: 0;
+}
+.header-desktop {
+    left: 206px;
+}
+.section__content--p30 {
+    padding: 0 15px;
+}
+.page-container {
+    background: #e5e5e5;
+    padding-left: 206px;
+}
+    */
+/* Admin panel side bar ui changes  var(--bs-body-color);*/
+ /* .table thead {
+    --bs-table-bg: none;
+}
+.dataTables_scrollHeadInner {
+    background-color:white;
+}
+
+table#reviewDatable {
+    width: 100% !important;
+} */

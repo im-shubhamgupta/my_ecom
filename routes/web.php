@@ -27,6 +27,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// php artisan config:clear
+// php artisan cache:clear
+// php artisan route:clear
+// php artisan view:clear
 
 Route::get('/',[FrontController::class,'index']);
 Route::get('category/{id}',[FrontController::class,'category']);
@@ -65,7 +69,7 @@ Route::group(['middleware'=>'disable_back_btn'],function(){
     });
 });
 
-
+// ------------------------Backend routes-------------------------------------------------------------
 Route::get('admin',[AdminController::class,'index']);
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 
@@ -162,10 +166,5 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
 //ajax datas
 Route::any('admin/fetchOrders',[AjaxController::class,'index']);
-
-// {
-
-//     die("<h3>hello world</h3>");
-
-// });
-
+Route::any('admin/fetchProductReviews',[AjaxController::class,'product_review']);
+Route::any('admin/fetchDataByAjax',[AjaxController::class,'fetch_data']);
