@@ -15,6 +15,7 @@ class FrontController extends Controller
 {
     public function index(Request $request)
     {
+        // die(45);
         $result['home_categories']=DB::table('categories')
                 ->where(['status'=>1])
                 ->where(['is_home'=>1])
@@ -35,7 +36,7 @@ class FrontController extends Controller
                     ->leftJoin('colors','colors.id','=','products_attr.color_id')
                     ->where(['products_attr.products_id'=>$list1->id])
                     ->get();
-                
+
             }
         }
 
@@ -43,7 +44,7 @@ class FrontController extends Controller
                 ->where(['status'=>1])
                 ->where(['is_home'=>1])
                 ->get();
-        
+
 
         $result['home_featured_product'][$list->id]=
                 DB::table('products')
@@ -58,7 +59,7 @@ class FrontController extends Controller
                 ->leftJoin('colors','colors.id','=','products_attr.color_id')
                 ->where(['products_attr.products_id'=>$list1->id])
                 ->get();
-            
+
         }
 
         $result['home_tranding_product'][$list->id]=
@@ -74,7 +75,7 @@ class FrontController extends Controller
                 ->leftJoin('colors','colors.id','=','products_attr.color_id')
                 ->where(['products_attr.products_id'=>$list1->id])
                 ->get();
-            
+
         }
 
         $result['home_discounted_product'][$list->id]=
@@ -90,9 +91,9 @@ class FrontController extends Controller
                 ->leftJoin('colors','colors.id','=','products_attr.color_id')
                 ->where(['products_attr.products_id'=>$list1->id])
                 ->get();
-            
+
         }
-         
+
         $result['home_banner']=DB::table('home_banners')
             ->where(['status'=>1])
             ->get();
@@ -101,7 +102,7 @@ class FrontController extends Controller
     }
 
     public function category(Request $request,$slug)
-    {   
+    {
         $sort="";
         $sort_txt="";
         $filter_price_start="";
@@ -110,8 +111,8 @@ class FrontController extends Controller
         $colorFilterArr=[];
         if($request->get('sort')!==null){
             $sort=$request->get('sort');
-        }    
-        
+        }
+
         $query=DB::table('products');
         $query=$query->leftJoin('categories','categories.id','=','products.category_id');
         $query=$query->leftJoin('products_attr','products.id','=','products_attr.products_id');
@@ -139,23 +140,23 @@ class FrontController extends Controller
             if($filter_price_start>0 && $filter_price_end>0){
                 $query=$query->whereBetween('products_attr.price',[$filter_price_start,$filter_price_end]);
             }
-        }  
+        }
 
         if($request->get('color_filter')!==null){
-            $color_filter=$request->get('color_filter');        
+            $color_filter=$request->get('color_filter');
             $colorFilterArr=explode(":",$color_filter);
             $colorFilterArr=array_filter($colorFilterArr);
-           
+
             $query=$query->where(['products_attr.color_id'=>$request->get('color_filter')]);
-            
+
         }
 
         $query=$query->distinct()->select('products.*');
         $query=$query->get();
         $result['product']=$query;
-        
+
         foreach($result['product'] as $list1){
-           
+
             $query1=DB::table('products_attr');
             $query1=$query1->leftJoin('sizes','sizes.id','=','products_attr.size_id');
             $query1=$query1->leftJoin('colors','colors.id','=','products_attr.color_id');
@@ -172,7 +173,7 @@ class FrontController extends Controller
         $result['categories_left']=DB::table('categories')
         ->where(['status'=>1])
         ->get();
-        
+
         $result['slug']=$slug;
         $result['sort']=$sort;
         $result['sort_txt']=$sort_txt;
@@ -219,7 +220,7 @@ class FrontController extends Controller
                 ->where(['products_attr.products_id'=>$list1->id])
                 ->get();
         }
-        
+
         $result['product_review']=
                 DB::table('product_review')
                 ->leftJoin('customers','customers.id','=','product_review.customer_id')
@@ -229,7 +230,7 @@ class FrontController extends Controller
                 ->select('product_review.rating','product_review.review','product_review.added_on','customers.name')
                 ->get();
         //prx($result['product_review']);
-        
+
         return view('front.product',$result);
     }
 
@@ -242,14 +243,14 @@ class FrontController extends Controller
             $uid=getUserTempId();
             $user_type="Not-Reg";
         }
-        
+
         $size_id=$request->post('size_id');
         $color_id=$request->post('color_id');
         $pqty=$request->post('pqty');
         $product_id=$request->post('product_id');
 
 
-        
+
         $result=DB::table('products_attr')
             ->select('products_attr.id')
             ->leftJoin('sizes','sizes.id','=','products_attr.size_id')
@@ -285,7 +286,7 @@ class FrontController extends Controller
                     ->update(['qty'=>$pqty]);
                 $msg="updated";
             }
-            
+
         }else{
             $id=DB::table('cart')->insertGetId([
                 'user_id'=>$uid,
@@ -305,7 +306,7 @@ class FrontController extends Controller
             ->where(['user_id'=>$uid])
             ->where(['user_type'=>$user_type])
             ->select('cart.qty','products.name','products.image','sizes.size','colors.color','products_attr.price','products.slug','products.id as pid','products_attr.id as attr_id')
-            ->get();    
+            ->get();
         return response()->json(['msg'=>$msg,'data'=>$result,'totalItem'=>count($result)]);
     }
 
@@ -346,9 +347,9 @@ class FrontController extends Controller
             $query=$query->distinct()->select('products.*');
             $query=$query->get();
             $result['product']=$query;
-            
+
             foreach($result['product'] as $list1){
-               
+
                 $query1=DB::table('products_attr');
                 $query1=$query1->leftJoin('sizes','sizes.id','=','products_attr.size_id');
                 $query1=$query1->leftJoin('colors','colors.id','=','products_attr.color_id');
@@ -356,7 +357,7 @@ class FrontController extends Controller
                 $query1=$query1->get();
                 $result['product_attr'][$list1->id]=$query1;
             }
-        
+
         return view('front.search',$result);
     }
 
@@ -365,11 +366,11 @@ class FrontController extends Controller
         if($request->session()->has('FRONT_USER_LOGIN')!=null){
             return redirect('/');
         }
-        
+
         $result=[];
         return view('front.registration',$result);
     }
-    
+
     public function registration_process(Request $request)
     {
        $valid=Validator::make($request->all(),[
@@ -412,26 +413,24 @@ class FrontController extends Controller
 
     public function login_process(Request $request)
     {
-       
-        $result=DB::table('customers')  
+        $result=DB::table('customers')
             ->where(['email'=>$request->str_login_email])
-            ->get(); 
-        
+            ->get();
+
+
         if(isset($result[0])){
-            $db_pwd=Crypt::decrypt($result[0]->password);
+            $db_pwd = $result[0]->password;
             $status=$result[0]->status;
             $is_verify=$result[0]->is_verify;
 
             if($is_verify==0){
-                return response()->json(['status'=>"error",'msg'=>'Please verify your email id']); 
+                return response()->json(['status'=>"error",'msg'=>'Please verify your email id']);
             }
             if($status==0){
-                return response()->json(['status'=>"error",'msg'=>'Your account has been deactivated']); 
+                return response()->json(['status'=>"error",'msg'=>'Your account has been deactivated']);
             }
-
-            if($db_pwd==$request->str_login_password){
-
-                if($request->rememberme===null){
+            if(Hash::check($request->post('str_login_password'),$db_pwd)){
+                if($request->rememberme === null){
                     setcookie('login_email',$request->str_login_email,100);
                     setcookie('login_pwd',$request->str_login_password,100);
                 }else{
@@ -446,10 +445,9 @@ class FrontController extends Controller
                 $msg="";
 
                 $getUserTempId=getUserTempId();
-                DB::table('cart')  
+                DB::table('cart')
                     ->where(['user_id'=>$getUserTempId,'user_type'=>'Not-Reg'])
                     ->update(['user_id'=>$result[0]->id,'user_type'=>'Reg']);
-                
             }else{
                 $status="error";
                 $msg="Please enter valid password";
@@ -458,19 +456,19 @@ class FrontController extends Controller
             $status="error";
             $msg="Please enter valid email id";
         }
-       return response()->json(['status'=>$status,'msg'=>$msg]); 
-       //$request->password
+       return response()->json(['status'=>$status,'msg'=>$msg]);
+
     }
-    
+
     public function email_verification(Request $request,$id)
     {
-        $result=DB::table('customers')  
+        $result=DB::table('customers')
             ->where(['rand_id'=>$id])
             ->where(['is_verify'=>0])
-            ->get(); 
+            ->get();
 
         if(isset($result[0])){
-            DB::table('customers')  
+            DB::table('customers')
             ->where(['id'=>$result[0]->id])
             ->update(['is_verify'=>1,'rand_id'=>'']);
         return view('front.verification');
@@ -482,14 +480,14 @@ class FrontController extends Controller
 
     public function forgot_password(Request $request)
     {
-        
-        $result=DB::table('customers')  
+
+        $result=DB::table('customers')
             ->where(['email'=>$request->str_forgot_email])
-            ->get(); 
+            ->get();
         $rand_id=rand(111111111,999999999);
         if(isset($result[0])){
 
-            DB::table('customers')  
+            DB::table('customers')
                 ->where(['email'=>$request->str_forgot_email])
                 ->update(['is_forgot_password'=>1,'rand_id'=>$rand_id]);
 
@@ -499,23 +497,23 @@ class FrontController extends Controller
                 $messages->to($user['to']);
                 $messages->subject("Forgot Password");
             });
-            return response()->json(['status'=>'success','msg'=>'Please check your email for password']); 
+            return response()->json(['status'=>'success','msg'=>'Please check your email for password']);
         }else{
-            return response()->json(['status'=>'error','msg'=>'Email id not registered']); 
+            return response()->json(['status'=>'error','msg'=>'Email id not registered']);
         }
     }
 
 
     public function forgot_password_change(Request $request,$id)
     {
-        $result=DB::table('customers')  
+        $result=DB::table('customers')
             ->where(['rand_id'=>$id])
             ->where(['is_forgot_password'=>1])
-            ->get(); 
+            ->get();
 
         if(isset($result[0])){
             $request->session()->put('FORGOT_PASSWORD_USER_ID',$result[0]->id);
-        
+
             return view('front.forgot_password_change');
         }else{
             return redirect('/');
@@ -524,7 +522,7 @@ class FrontController extends Controller
 
     public function forgot_password_change_process(Request $request)
     {
-        DB::table('customers')  
+        DB::table('customers')
             ->where(['id'=>$request->session()->get('FORGOT_PASSWORD_USER_ID')])
             ->update(
                 [
@@ -532,8 +530,8 @@ class FrontController extends Controller
                     'password'=>Crypt::encrypt($request->password)   ,
                     'rand_id'=>''
                 ]
-            ); 
-        return response()->json(['status'=>'success','msg'=>'Password changed']);     
+            );
+        return response()->json(['status'=>'success','msg'=>'Password changed']);
     }
 
     public function checkout(Request $request)
@@ -544,9 +542,9 @@ class FrontController extends Controller
 
             if($request->session()->has('FRONT_USER_LOGIN')){
                 $uid=$request->session()->get('FRONT_USER_ID');
-                $customer_info=DB::table('customers')  
+                $customer_info=DB::table('customers')
                     ->where(['id'=> $uid])
-                     ->get(); 
+                     ->get();
                 $result['customers']['name']=$customer_info[0]->name;
                 $result['customers']['email']=$customer_info[0]->email;
                 $result['customers']['mobile']=$customer_info[0]->mobile;
@@ -569,7 +567,7 @@ class FrontController extends Controller
             return redirect('/');
         }
     }
-    
+
     public function apply_coupon_code(Request $request)
     {
          $arr=apply_coupon_code($request->coupon_code);
@@ -577,34 +575,34 @@ class FrontController extends Controller
 
          return response()->json(['status'=>$arr['status'],'msg'=>$arr['msg'],'totalPrice'=>$arr['totalPrice']]);
     }
-    
+
     public function remove_coupon_code(Request $request)
     {
         $totalPrice=0;
-        $result=DB::table('coupons')  
+        $result=DB::table('coupons')
         ->where(['code'=>$request->coupon_code])
-        ->get(); 
+        ->get();
         $getAddToCartTotalItem=getAddToCartTotalItem();
         $totalPrice=0;
         foreach($getAddToCartTotalItem as $list){
             $totalPrice=$totalPrice+($list->qty*$list->price);
-        }  
-        
-        return response()->json(['status'=>'success','msg'=>'Coupon code removed','totalPrice'=>$totalPrice]); 
+        }
+
+        return response()->json(['status'=>'success','msg'=>'Coupon code removed','totalPrice'=>$totalPrice]);
     }
 
     public function place_order(Request $request)
     {
         $payment_url='';
         $rand_id=rand(111111111,999999999);
-                
+
         if($request->session()->has('FRONT_USER_LOGIN')){
 
         }else{
             $valid=Validator::make($request->all(),[
                 "email"=>'required|email|unique:customers,email'
             ]);
-    
+
             if(!$valid->passes()){
                 return response()->json(['status'=>'error','msg'=>"The email has already been taken"]);
 
@@ -638,8 +636,8 @@ class FrontController extends Controller
                     $messages->subject('New Password');
                 });
 
-                $getUserTempId=getUserTempId();
-                DB::table('cart')  
+                $getUserTempId = getUserTempId();
+                DB::table('cart')
                     ->where(['user_id'=>$getUserTempId,'user_type'=>'Not-Reg'])
                     ->update(['user_id'=>$user_id,'user_type'=>'Reg']);
             }
@@ -654,14 +652,14 @@ class FrontController extends Controller
                 return response()->json(['status'=>'false','msg'=>$arr['msg']]);
             }
         }
-        
+
 
         $uid=$request->session()->get('FRONT_USER_ID');
         $totalPrice=0;
         $getAddToCartTotalItem=getAddToCartTotalItem();
         foreach($getAddToCartTotalItem as $list){
             $totalPrice=$totalPrice+($list->qty*$list->price);
-        }  
+        }
         $arr=[
             "customers_id"=>$uid,
             "name"=>$request->name,
@@ -679,8 +677,8 @@ class FrontController extends Controller
             "order_status"=>1,
             "added_on"=>date('Y-m-d h:i:s')
         ];
-        $order_id=DB::table('orders')->insertGetId($arr);
-        
+        $order_id = DB::table('orders')->insertGetId($arr);
+
         if($order_id>0){
             foreach($getAddToCartTotalItem as $list){
                 $prductDetailArr['product_id']=$list->pid;
@@ -689,8 +687,8 @@ class FrontController extends Controller
                 $prductDetailArr['qty']=$list->qty;
                 $prductDetailArr['orders_id']=$order_id;
                 DB::table('orders_details')->insert($prductDetailArr);
-            }  
-            
+            }
+
             if($request->payment_type=='Gateway'){
                 $final_amt=$totalPrice-$coupon_value;
                 $ch = curl_init();
@@ -716,7 +714,7 @@ class FrontController extends Controller
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
                 $response = curl_exec($ch);
-                curl_close($ch); 
+                curl_close($ch);
                 $response=json_decode($response);
                 if(isset($response->payment_request->id)){
                     $txn_id=$response->payment_request->id;
@@ -729,10 +727,22 @@ class FrontController extends Controller
                     foreach($response->message as $key=>$val){
                         $msg.=strtoupper($key).": ".$val[0].'<br/>';
                     }
-                    return response()->json(['status'=>'error','msg'=>$msg,'payment_url'=>'']); 
+                    return response()->json(['status'=>'error','msg'=>$msg,'payment_url'=>'']);
                 }
-                
+
             }
+            elseif($request->payment_type == "razorpay"){
+
+
+
+
+
+
+            }
+
+
+
+
             DB::table('cart')->where(['user_id'=>$uid,'user_type'=>'Reg'])->delete();
             $request->session()->put('ORDER_ID',$order_id);
 
@@ -742,7 +752,7 @@ class FrontController extends Controller
             $status="false";
             $msg="Please try after sometime";
         }
-        return response()->json(['status'=>$status,'msg'=>$msg,'payment_url'=>$payment_url]); 
+        return response()->json(['status'=>$status,'msg'=>$msg,'payment_url'=>$payment_url]);
     }
 
     public function order_placed(Request $request)
@@ -789,7 +799,7 @@ class FrontController extends Controller
         ->select('orders.*','orders_status.orders_status')
         ->leftJoin('orders_status','orders_status.id','=','orders.order_status')
         ->where(['orders.customers_id'=>$request->session()->get('FRONT_USER_ID')])
-        ->get();    
+        ->get();
         return view('front.order',$result);
     }
 
@@ -812,7 +822,7 @@ class FrontController extends Controller
         }
         return view('front.order_detail',$result);
     }
-    
+
     public function product_review_process(Request $request)
     {
         if($request->session()->has('FRONT_USER_LOGIN')){
@@ -833,7 +843,7 @@ class FrontController extends Controller
             $status="error";
             $msg="Please login to submit your review";
         }
-        return response()->json(['status'=>$status,'msg'=>$msg]); 
+        return response()->json(['status'=>$status,'msg'=>$msg]);
     }
-    
+
 }

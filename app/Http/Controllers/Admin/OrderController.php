@@ -36,6 +36,7 @@ class OrderController extends Controller
             DB::table('orders_status')
             ->get();
         $result['payment_status']=['Pending','Success','Fail'];
+        print_r($result);
         return view('admin.order_detail',$result);
     }
 

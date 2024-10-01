@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between mb10">
         <div><h1 class="">Product Review</h1></div>
         <div>
-            <button class="btn btn-primary"  data-toggle="tooltip" data-placement="top" title="Export">Export</button>
+            <button class="btn btn-primary"  data-toggle="tooltip" onclick="export_product_review(this)" data-placement="top" title="Export">Export</button>
             {{-- <button class="btn btn-primary"></button> --}}
             {{-- <button class="btn btn-primary"></button> --}}
         </div>

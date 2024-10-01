@@ -1,6 +1,8 @@
 // $('#orderDatatable').datatable();
 // $('#datas_datatable').dataTable({
 
+// const { before } = require("lodash");
+
 // function order_click(){
 
 // alert(78);
@@ -17,7 +19,6 @@ $.ajaxSetup({
     }
 });
 function load_all_orders(){
-    // alert(1);
     $('#orderDatatable').dataTable({
         "lengthMenu": [ [10, 25, 50, 100,-1], [10, 25, 50, 100,'All'] ],
         "pageLength": 25,
@@ -43,14 +44,23 @@ function load_all_orders(){
         ],
 
         "processing": true,
-            "serverSide": true,
-            "scrollX": true,
-            "ajax":{
-                'url' : 'fetchOrders',
-                'type': "POST",
-                'data' : {
-                    'ajax_action' : 'fetch_all_bookings'
-                }
+        "serverSide": true,
+        "scrollX": true,
+        "ajax":{
+            'url' : 'fetchOrders',
+            'type': "POST",
+            'data' : {
+                'ajax_action' : 'fetch_all_bookings'
+            },
+        "error": function(xhr, status, error) {
+            if (xhr.status === 419) { // Laravel returns 419 for expired tokens
+                alert('Session expired. Please refresh the page.');
+                location.reload(); // Or request a new token and retry the request
+            }else {
+                console.error("An xhr occurred: " + xhr);
+                console.error("An error occurred: " + error);
+            }
+        },
         },
     });
 }
@@ -142,5 +152,40 @@ function load_all_categories(){
             }
         },
     });
+}
+function export_product_review(self){
+
+    $.ajax({
+        url :"export_product_review_sheet",
+        type: 'POST',
+        // data: form_data,
+        dataType: 'JSON',
+        contentType:false,
+        cache:false,
+        processData:false,
+        beforeSend: function(){
+            $(self).html('  <i class="fa fa-spinner fa-spin"></i>');//.attr('disabled',true)
+        },
+        complete: function(){ $(self).html(btn_name);//.attr('disabled',false);
+        },
+        success: function (data) {
+            if(data.check=='success'){
+                // fetch_all_category();
+                // $('#users_datatable').DataTable().ajax.reload();
+                // iziToast.success({
+                //     title: 'Success',
+                //     message: data.msg,
+                //     onClosed: function () {
+                //         // redirect('all_orders');
+                //     }
+
+                // });
+            }
+        }
+    });
+
+
+
+
 }
 
