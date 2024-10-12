@@ -732,8 +732,8 @@ class FrontController extends Controller
 
             }
             elseif($request->payment_type == "razorpay"){
-
-
+                echo "45";
+                echoPrint($request);
 
 
 
@@ -752,6 +752,7 @@ class FrontController extends Controller
             $status="false";
             $msg="Please try after sometime";
         }
+        die('stop');
         return response()->json(['status'=>$status,'msg'=>$msg,'payment_url'=>$payment_url]);
     }
 

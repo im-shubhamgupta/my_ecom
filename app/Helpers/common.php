@@ -6,6 +6,11 @@ function prx($arr){
     print_r($arr);
     die();
 }
+function echoPrint($arr){
+    echo "<pre>";
+    print_r($arr);
+    echo "</pre>";
+}
 
 function getTopNavCat(){
     $result=DB::table('categories')
@@ -32,7 +37,7 @@ function buildTreeView($arr,$parent,$level=0,$prelevel= -1){
 				}else{
 					$html.='<ul class="dropdown-menu">';
 				}
-				
+
 			}
 			if($level==$prelevel){
 				$html.='</li>';
@@ -82,32 +87,32 @@ function getAddToCartTotalItem(){
             ->get();
 
 	return $result;
-   
+
 }
 
 
 function apply_coupon_code($coupon_code){
 	$totalPrice=0;
-	$result=DB::table('coupons')  
+	$result=DB::table('coupons')
 		->where(['code'=>$coupon_code])
-		->get(); 
-	
+		->get();
+
 	if(isset($result[0])){
 		$value=$result[0]->value;
 		$type=$result[0]->type;
 		$getAddToCartTotalItem=getAddToCartTotalItem();
-		
+
 		foreach($getAddToCartTotalItem as $list){
 			$totalPrice=$totalPrice+($list->qty*$list->price);
-		}  
+		}
 		if($result[0]->status==1){
 			if($result[0]->is_one_time==1){
 				$status="error";
-				$msg="Coupon code already used";    
+				$msg="Coupon code already used";
 			}else{
 				$min_order_amt=$result[0]->min_order_amt;
 				if($min_order_amt>0){
-						
+
 					if($min_order_amt<$totalPrice){
 						$status="success";
 						$msg="Coupon code applied";
@@ -122,14 +127,14 @@ function apply_coupon_code($coupon_code){
 			}
 		}else{
 			$status="error";
-			$msg="Coupon code deactivated";   
+			$msg="Coupon code deactivated";
 		}
-		
+
 	}else{
 		$status="error";
 		$msg="Please enter valid coupon code";
 	}
-	
+
 	$coupon_code_value=0;
 	if($status=='success'){
 		if($type=='Value'){
