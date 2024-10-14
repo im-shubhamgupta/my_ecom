@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductReviewController;
 
 use App\Http\Controllers\Front\FrontController;
+use App\Http\Controllers\Front\LoginController;
+use App\Http\Controllers\Front\PaymentController;
 
 use App\Http\Controllers\ajax\AjaxController;
 use Illuminate\Support\Facades\Route;
@@ -31,8 +33,10 @@ use Illuminate\Support\Facades\Route;
 // php artisan cache:clear
 // php artisan route:clear
 // php artisan view:clear
+// Project ID: my-ecom-438507. It cannot be changed later.
 
-Route::get('/',[FrontController::class,'index']);
+
+Route::get('/',[FrontController::class,'index'])->name('index.home');
 Route::get('category/{id}',[FrontController::class,'category']);
 Route::get('product/{id}',[FrontController::class,'product']);
 Route::post('add_to_cart',[FrontController::class,'add_to_cart']);
@@ -40,7 +44,7 @@ Route::get('cart',[FrontController::class,'cart']);
 Route::get('search/{str}',[FrontController::class,'search']);
 Route::get('registration',[FrontController::class,'registration']);
 Route::post('registration_process',[FrontController::class,'registration_process'])->name('registration.registration_process');
-Route::post('login_process',[FrontController::class,'login_process'])->name('login.login_process');
+// Route::post('login_process',[FrontController::class,'login_process'])->name('login.login_process');
 Route::get('logout', function () {
     session()->forget('FRONT_USER_LOGIN');
     session()->forget('FRONT_USER_ID');
@@ -53,6 +57,7 @@ Route::post('forgot_password',[FrontController::class,'forgot_password']);
 Route::get('/forgot_password_change/{id}',[FrontController::class,'forgot_password_change']);
 Route::post('forgot_password_change_process',[FrontController::class,'forgot_password_change_process']);
 Route::get('/checkout',[FrontController::class,'checkout']);
+// Route::get('/checkout/initiatePayment',[PaymentController::class,'initiatePayment']);
 Route::post('apply_coupon_code',[FrontController::class,'apply_coupon_code']);
 Route::post('remove_coupon_code',[FrontController::class,'remove_coupon_code']);
 Route::post('place_order',[FrontController::class,'place_order']);
@@ -169,3 +174,11 @@ Route::any('admin/fetchOrders',[AjaxController::class,'index']);
 Route::any('admin/fetchProductReviews',[AjaxController::class,'product_review']);
 Route::any('admin/fetchDataByAjax',[AjaxController::class,'fetch_data']);
 // Route::post('admin/export_product_review_sheet'[AjaxController::class,''])
+
+//--------------------------------------Front Login Controllers---------------------------------------
+Route::post('login_process',[LoginController::class,'login_process'])->name('login.login_process');
+Route::get('login_process',[LoginController::class,'handleGoogleCallback']);
+// Route::get('auth/google', [LoginController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+// http://127.0.0.1:8000/login_process?code=4%2F0AVG7fiTk4CE26Mco0Jj5AtxtJLAjciZuEH7i37Xb4GH5OU0eyIyfutj8Xb1Gld8rB2Q9hw&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent

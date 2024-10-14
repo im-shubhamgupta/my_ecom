@@ -183,9 +183,43 @@ function export_product_review(self){
             }
         }
     });
+}
+function initiateRazorpayPaymentGateway(self){
+    var form_data = {
+        "test" : "test"
+    };
+console.log(self);
+    var btn_name = $(self).text();
+    $.ajax({
+        url :"checkout/initiatePayment",
+        type: 'POST',
+        dataType: 'JSON',
+        data: form_data,
+        contentType:false,
+        cache:false,
+        processData:false,
+        beforeSend: function(){
+            $(self).html('  <i class="fa fa-spinner fa-spin"></i>').attr('disabled',true);
+        },
+        complete: function(){
+            $(self).html(btn_name).attr('disabled',false);
+        },
+        success: function (data) {
+            console.log(data);
+            if(data.check=='success'){
+                // fetch_all_category();
+                // $('#users_datatable').DataTable().ajax.reload();
+                // iziToast.success({
+                //     title: 'Success',
+                //     message: data.msg,
+                //     onClosed: function () {
+                //         // redirect('all_orders');
+                //     }
 
-
+                // });
+            }
+        }
+    });
 
 
 }
-

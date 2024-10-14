@@ -143,10 +143,10 @@
                   <div class="aa-payment-method">
                     <label for="cod"><input type="radio" id="cod" name="payment_type" value="COD" checked> Cash on Delivery </label>
                     <label for="instamojo">
-                    <input type="radio" id="instamojo" name="payment_type" value="Gateway"> Via Instamojo </label>
+                    <input type="radio" id="instamojo" name="payment_type" value="instamojo"> Via Instamojo </label>
                     <label for="Razorpay Payment Gateway">
-                    <input type="radio" id="razorpay" name="payment_type" value="Gateway"> Via Instamojo </label>
-
+                    <input type="radio" id="" name="payment_type" value="razorpay"> Razorpay Payment Gateway</label>
+                    {{-- onclick="initiateRazorpayPaymentGateway()" --}}
                     <input type="submit" value="Place Order" class="aa-browse-btn" id="btnPlaceOrder">
                   </div>
 

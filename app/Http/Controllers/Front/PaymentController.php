@@ -17,7 +17,7 @@ class PaymentController extends Controller
 
         // Prepare order data
         $orderData = [
-            'receipt'         => 'order_rcptid_11',
+            'receipt'         => isset($request->input('receipt')) ? $request->input('receipt') : 'default_receipt',
             'amount'          => $request->input('amount') * 100, // Convert to paise
             'currency'        => 'INR',
             'payment_capture' => 1 // auto capture
@@ -27,7 +27,7 @@ class PaymentController extends Controller
         $order = $api->order->create($orderData);
         print_r($order);
 
-        return view('payment', ['order_id' => $order['id'], 'amount' => $orderData['amount']]);
+        return array('payment', ['order_id' => $order['id'], 'amount' => $orderData['amount']]);
     }
 
     public static function paymentCallback(Request $request)

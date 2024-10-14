@@ -3,22 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('page_title')</title>
     <link href="{{asset('front_assets/css/font-awesome.css')}}" rel="stylesheet">
-    <link href="{{asset('front_assets/css/bootstrap.css')}}" rel="stylesheet">   
+    <link href="{{asset('front_assets/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('front_assets/css/jquery.smartmenus.bootstrap.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/jquery.simpleLens.css')}}">    
+    <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/jquery.simpleLens.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/slick.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('front_assets/css/nouislider.css')}}">
     <link id="switcher" href="{{asset('front_assets/css/theme-color/default-theme.css')}}" rel="stylesheet">
     <link href="{{asset('front_assets/css/sequence-theme.modern-slide-in.css')}}" rel="stylesheet" media="all">
-    <link href="{{asset('front_assets/css/style.css')}}" rel="stylesheet">    
+    <link href="{{asset('front_assets/css/style.css')}}" rel="stylesheet">
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,20 +26,20 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-      
+
     <script>
     var PRODUCT_IMAGE="{{asset('storage/media/')}}";
     </script>
 
   </head>
-  <body class="productPage"> 
+  <body class="productPage">
    <!-- wpf loader Two -->
-    <div id="wpf-loader-two">          
+    <div id="wpf-loader-two">
       <div class="wpf-loader-two-inner">
         <span>Loading</span>
       </div>
-    </div> 
-    <!-- / wpf loader Two -->       
+    </div>
+    <!-- / wpf loader Two -->
   <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
   <!-- END SCROLL TOP BUTTON -->
@@ -55,7 +55,7 @@
             <div class="aa-header-top-area">
               <!-- start header top left -->
               <div class="aa-header-top-left">
-                
+
                 <!-- start cellphone -->
                 <div class="cellphone hidden-xs">
                   <p><span class="fa fa-phone"></span>00-62-658-658</p>
@@ -72,7 +72,7 @@
                   @else
                     <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
                   @endif
-                  
+
 
                 </ul>
               </div>
@@ -105,7 +105,7 @@
               $getAddToCartTotalItem=getAddToCartTotalItem();
               $totalCartItem=count($getAddToCartTotalItem);
               $totalPrice=0;
-              @endphp 
+              @endphp
               <div class="aa-cartbox">
                 <a class="aa-cart-link" href="#" id="cartBox">
                   <span class="fa fa-shopping-basket"></span>
@@ -114,7 +114,7 @@
                 </a>
                 <div class="aa-cartbox-summary">
                @if($totalCartItem>0)
-                
+
                   <ul>
                     @foreach($getAddToCartTotalItem as $cartItem)
 
@@ -128,7 +128,7 @@
                         <p>{{$cartItem->qty}} * Rs {{$cartItem->price}}</p>
                       </div>
                     </li>
-                    @endforeach                  
+                    @endforeach
                     <li>
                       <span class="aa-cartbox-total-title">
                         Total
@@ -139,7 +139,7 @@
                     </li>
                   </ul>
                   <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/cart')}}">Cart</a>
-               
+
                 @endif
                 </div>
               </div>
@@ -151,7 +151,7 @@
                   <button type="button" onclick="funSearch()"><span class="fa fa-search"></span></button>
                 </form>
               </div>
-              <!-- / search box -->             
+              <!-- / search box -->
             </div>
           </div>
         </div>
@@ -172,24 +172,24 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>          
+            </button>
           </div>
-          
+
           <div class="navbar-collapse collapse">
             <!-- Left nav -->
             {!! getTopNavCat() !!}
           </div><!--/.nav-collapse -->
         </div>
-      </div>       
+      </div>
     </div>
   </section>
   <!-- / menu -->
   <!-- Start slider -->
-  
+
   @section('container')
-  @show      
-  
-  <!-- footer -->  
+  @show
+
+  <!-- footer -->
   <footer id="aa-footer">
     <!-- footer bottom -->
     <div class="aa-footer-top">
@@ -291,13 +291,13 @@
     $login_email='';
     $login_pwd='';
     $is_remember="";
-  }   
+  }
 
-  @endphp    
-  <!-- Login Modal -->  
+  @endphp
+  <!-- Login Modal -->
   <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">                      
+      <div class="modal-content">
         <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <div id="popup_login">
@@ -305,15 +305,17 @@
             <form class="aa-login-form" id="frmLogin">
               <label for="">Email address<span>*</span></label>
               <input type="email" placeholder="Email" name="str_login_email" required value="{{$login_email}}">
+              <input type="hidden" name="login_type" id="login_type" required value="">
               <label for="">Password<span>*</span></label>
-              <input type="password" placeholder="Password" name="str_login_password" required value="{{$login_pwd}}">
-              <button class="aa-browse-btn" type="submit" id="btnLogin">Login</button>
+              <input type="password" placeholder="Password" data-type="default" name="str_login_password" required value="{{$login_pwd}}">
+              <button class="aa-browse-btn" type="button"  onclick="loginBydefault()"  id="btnLogin">Login</button>
+              <button class="btn btn-primary"  onclick="loginByGoogle()"  type="button" id="googleLogin"><i class="fa fa-google"></i></button>
               <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme" name="rememberme" {{$is_remember}}> Remember me </label>
 
               <div id="login_msg"></div>
 
               <p class="aa-lost-password"><a href="javascript:void(0)" onclick="forgot_password()">Lost your password?</a></p>
-              
+
               <div class="aa-register-now">
                 Don't have an account?<a href="{{url('registration')}}">Register now!</a>
               </div>
@@ -328,7 +330,7 @@
               <button class="aa-browse-btn" type="submit" id="btnForgot">Submit</button>
               <br><br>
               <div id="forgot_msg"></div>
-             
+
               <div class="aa-register-now">
                 Login Form?<a href="javascript:void(0)" onclick="show_login_popup()">Login now!</a>
               </div>
@@ -336,22 +338,22 @@
             </form>
           </div>
 
-        </div>                        
+        </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-  </div>    
+  </div>
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="{{asset('front_assets/js/bootstrap.js')}}"></script>  
+  <script src="{{asset('front_assets/js/bootstrap.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.js')}}"></script>
-  <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.bootstrap.js')}}"></script>  
+  <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.bootstrap.js')}}"></script>
   <script src="{{asset('front_assets/js/sequence.js')}}"></script>
-  <script src="{{asset('front_assets/js/sequence-theme.modern-slide-in.js')}}"></script>  
+  <script src="{{asset('front_assets/js/sequence-theme.modern-slide-in.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.simpleGallery.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.simpleLens.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/slick.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/nouislider.js')}}"></script>
-  <script src="{{asset('front_assets/js/custom.js')}}"></script> 
+  <script src="{{asset('front_assets/js/custom.js')}}"></script>
   </body>
 </html>

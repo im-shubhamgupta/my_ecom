@@ -8,11 +8,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cookie;
+use App\Services\PaymentService;
 
 use Crypt;
 use Mail;
 class FrontController extends Controller
 {
+    protected $paymentService;
+
+    public function __construct(PaymentService $paymentService)
+    {
+        $this->paymentService = $paymentService;
+    }
     public function index(Request $request)
     {
         // die(45);
@@ -411,7 +418,7 @@ class FrontController extends Controller
        }
     }
 
-    public function login_process(Request $request)
+    /*public function login_process(Request $request)
     {
         $result=DB::table('customers')
             ->where(['email'=>$request->str_login_email])
@@ -458,7 +465,7 @@ class FrontController extends Controller
         }
        return response()->json(['status'=>$status,'msg'=>$msg]);
 
-    }
+    }*/
 
     public function email_verification(Request $request,$id)
     {
@@ -593,6 +600,7 @@ class FrontController extends Controller
 
     public function place_order(Request $request)
     {
+        // print_r($request->all());
         $payment_url='';
         $rand_id=rand(111111111,999999999);
 
@@ -689,7 +697,7 @@ class FrontController extends Controller
                 DB::table('orders_details')->insert($prductDetailArr);
             }
 
-            if($request->payment_type=='Gateway'){
+            if($request->payment_type=='instamozo'){
                 $final_amt=$totalPrice-$coupon_value;
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, 'https://test.instamojo.com/api/1.1/payment-requests/');
@@ -732,9 +740,15 @@ class FrontController extends Controller
 
             }
             elseif($request->payment_type == "razorpay"){
-                echo "45";
-                echoPrint($request);
+                $final_amt = $totalPrice-$coupon_value;
+                echo "under on razorpay"."\n";
+                echo ini_get('curl.cainfo') . "\n";
+                echo ini_get('openssl.cafile') . "\n";
+                // echoPrint($request);
 
+                $res = $this->paymentService->createOrder($final_amt);
+
+                echoPrint($res);
 
 
 

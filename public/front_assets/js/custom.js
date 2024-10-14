@@ -1,54 +1,54 @@
-/** 
+/**
   * Template Name: Daily Shop
-  * Version: 1.0  
+  * Version: 1.0
   * Template Scripts
   * Author: MarkUps
   * Author URI: http://www.markups.io/
 
   Custom JS
-  
+
 
   1. CARTBOX
   2. TOOLTIP
-  3. PRODUCT VIEW SLIDER 
-  4. POPULAR PRODUCT SLIDER (SLICK SLIDER) 
+  3. PRODUCT VIEW SLIDER
+  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)
   5. FEATURED PRODUCT SLIDER (SLICK SLIDER)
-  6. LATEST PRODUCT SLIDER (SLICK SLIDER) 
+  6. LATEST PRODUCT SLIDER (SLICK SLIDER)
   7. TESTIMONIAL SLIDER (SLICK SLIDER)
   8. CLIENT BRAND SLIDER (SLICK SLIDER)
   9. PRICE SLIDER  (noUiSlider SLIDER)
   10. SCROLL TOP BUTTON
   11. PRELOADER
-  12. GRID AND LIST LAYOUT CHANGER 
+  12. GRID AND LIST LAYOUT CHANGER
   13. RELATED ITEM SLIDER (SLICK SLIDER)
 
-  
+
 **/
 
 jQuery(function($){
 
 
   /* ----------------------------------------------------------- */
-  /*  1. CARTBOX 
+  /*  1. CARTBOX
   /* ----------------------------------------------------------- */
-    
+
      jQuery(".aa-cartbox").hover(function(){
       jQuery(this).find(".aa-cartbox-summary").fadeIn(500);
     }
       ,function(){
           jQuery(this).find(".aa-cartbox-summary").fadeOut(500);
       }
-     );   
-  
+     );
+
   /* ----------------------------------------------------------- */
   /*  2. TOOLTIP
-  /* ----------------------------------------------------------- */    
+  /* ----------------------------------------------------------- */
     jQuery('[data-toggle="tooltip"]').tooltip();
     jQuery('[data-toggle2="tooltip"]').tooltip();
 
   /* ----------------------------------------------------------- */
-  /*  3. PRODUCT VIEW SLIDER 
-  /* ----------------------------------------------------------- */    
+  /*  3. PRODUCT VIEW SLIDER
+  /* ----------------------------------------------------------- */
 
     jQuery('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
         loading_image: 'demo/images/loading.gif'
@@ -60,7 +60,7 @@ jQuery(function($){
 
   /* ----------------------------------------------------------- */
   /*  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+  /* ----------------------------------------------------------- */
 
     jQuery('.aa-popular-slider').slick({
       dots: false,
@@ -96,12 +96,12 @@ jQuery(function($){
         // settings: "unslick"
         // instead of a settings object
       ]
-    }); 
+    });
 
-  
+
   /* ----------------------------------------------------------- */
   /*  5. FEATURED PRODUCT SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+  /* ----------------------------------------------------------- */
 
     jQuery('.aa-featured-slider').slick({
         dots: false,
@@ -138,10 +138,10 @@ jQuery(function($){
           // instead of a settings object
         ]
     });
-    
+
   /* ----------------------------------------------------------- */
   /*  6. LATEST PRODUCT SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+  /* ----------------------------------------------------------- */
     jQuery('.aa-latest-slider').slick({
         dots: false,
         infinite: false,
@@ -180,8 +180,8 @@ jQuery(function($){
 
   /* ----------------------------------------------------------- */
   /*  7. TESTIMONIAL SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */     
-    
+  /* ----------------------------------------------------------- */
+
     jQuery('.aa-testimonial-slider').slick({
       dots: true,
       infinite: true,
@@ -193,7 +193,7 @@ jQuery(function($){
 
   /* ----------------------------------------------------------- */
   /*  8. CLIENT BRAND SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */  
+  /* ----------------------------------------------------------- */
 
     jQuery('.aa-client-brand-slider').slick({
         dots: false,
@@ -235,7 +235,7 @@ jQuery(function($){
 
   /* ----------------------------------------------------------- */
   /*  9. PRICE SLIDER  (noUiSlider SLIDER)
-  /* ----------------------------------------------------------- */        
+  /* ----------------------------------------------------------- */
 
     jQuery(function(){
       if($('body').is('.productPage')){
@@ -243,7 +243,7 @@ jQuery(function($){
 
        var filter_price_start=jQuery('#filter_price_start').val();
        var filter_price_end=jQuery('#filter_price_end').val();
-       
+
        if(filter_price_start=='' || filter_price_end==''){
         var filter_price_start=100;
         var filter_price_end=1700;
@@ -280,7 +280,7 @@ jQuery(function($){
     });
 
 
-    
+
   /* ----------------------------------------------------------- */
   /*  10. SCROLL TOP BUTTON
   /* ----------------------------------------------------------- */
@@ -294,24 +294,24 @@ jQuery(function($){
         $('.scrollToTop').fadeOut();
       }
     });
-     
+
     //Click event to scroll to top
 
     jQuery('.scrollToTop').click(function(){
       $('html, body').animate({scrollTop : 0},800);
       return false;
     });
-  
+
   /* ----------------------------------------------------------- */
   /*  11. PRELOADER
   /* ----------------------------------------------------------- */
 
-    jQuery(window).load(function() { // makes sure the whole site is loaded      
-      jQuery('#wpf-loader-two').delay(200).fadeOut('slow'); // will fade out      
+    jQuery(window).load(function() { // makes sure the whole site is loaded
+      jQuery('#wpf-loader-two').delay(200).fadeOut('slow'); // will fade out
     })
 
   /* ----------------------------------------------------------- */
-  /*  12. GRID AND LIST LAYOUT CHANGER 
+  /*  12. GRID AND LIST LAYOUT CHANGER
   /* ----------------------------------------------------------- */
 
   jQuery("#list-catg").click(function(e){
@@ -326,7 +326,7 @@ jQuery(function($){
 
   /* ----------------------------------------------------------- */
   /*  13. RELATED ITEM SLIDER (SLICK SLIDER)
-  /* ----------------------------------------------------------- */      
+  /* ----------------------------------------------------------- */
 
     jQuery('.aa-related-item-slider').slick({
       dots: false,
@@ -362,8 +362,8 @@ jQuery(function($){
         // settings: "unslick"
         // instead of a settings object
       ]
-    }); 
-    
+    });
+
 });
 
 function change_product_color_image(img,color){
@@ -387,7 +387,7 @@ function add_to_cart(id,size_str_id,color_str_id){
   jQuery('#add_to_cart_msg').html('');
   var color_id=jQuery('#color_id').val();
   var size_id=jQuery('#size_id').val();
-  
+
   if(size_str_id==0){
     size_id='no';
   }
@@ -413,17 +413,17 @@ function add_to_cart(id,size_str_id,color_str_id){
         }else{
           alert("Product "+result.msg);
           if(result.totalItem==0){
-            jQuery('.aa-cart-notify').html('0'); 
+            jQuery('.aa-cart-notify').html('0');
             jQuery('.aa-cartbox-summary').remove();
          }else{
-           
-           jQuery('.aa-cart-notify').html(result.totalItem); 
+
+           jQuery('.aa-cart-notify').html(result.totalItem);
            var html='<ul>';
            jQuery.each(result.data, function(arrKey,arrVal){
              totalPrice=parseInt(totalPrice)+(parseInt(arrVal.qty)*parseInt(arrVal.price));
              html+='<li><a class="aa-cartbox-img" href="#"><img src="'+PRODUCT_IMAGE+'/'+arrVal.image+'" alt="img"></a><div class="aa-cartbox-info"><h4><a href="#">'+arrVal.name+'</a></h4><p> '+arrVal.qty+' * Rs  '+arrVal.price+'</p></div></li>';
            });
-          
+
          }
          html+='<li><span class="aa-cartbox-total-title">Total</span><span class="aa-cartbox-total-price">Rs '+totalPrice+'</span></li>';
          html+='</ul><a class="aa-cartbox-checkout aa-primary-btn" href="cart">Cart</a>';
@@ -462,7 +462,7 @@ function sort_by(){
 function sort_price_filter(){
   jQuery('#filter_price_start').val(jQuery('#skip-value-lower').html());
   jQuery('#filter_price_end').val(jQuery('#skip-value-upper').html());
-  jQuery('#categoryFilter').submit(); 
+  jQuery('#categoryFilter').submit();
 }
 
 function setColor(color,type){
@@ -474,7 +474,7 @@ function setColor(color,type){
     jQuery('#color_filter').val(color+':'+color_str);
     jQuery('#categoryFilter').submit();
   }
- 
+
   jQuery('#categoryFilter').submit();
 }
 
@@ -498,7 +498,7 @@ jQuery('#frmRegistration').submit(function(e){
           jQuery('#'+key+'_error').html(val[0]);
         });
       }
-      
+
       if(result.status=="success"){
         jQuery('#frmRegistration')[0].reset();
         jQuery('#thank_you_msg').html(result.msg);
@@ -506,10 +506,19 @@ jQuery('#frmRegistration').submit(function(e){
     }
   });
 });
-
+function loginBydefault(){
+    $('#login_type').val('default');
+    $('#frmLogin').submit();
+}
+function loginByGoogle(){
+    $('#login_type').val('google');
+    $('#frmLogin').submit();
+}
 jQuery('#frmLogin').submit(function(e){
   jQuery('#login_msg').html("");
   e.preventDefault();
+//   var data_string = jQuery('#frmLogin').serialize();
+//     data_string += `&payment_type="${payment_type}"`;
   jQuery.ajax({
     url:'/login_process',
     data:jQuery('#frmLogin').serialize(),
@@ -518,9 +527,10 @@ jQuery('#frmLogin').submit(function(e){
       if(result.status=="error"){
         jQuery('#login_msg').html(result.msg);
       }
-      
+
       if(result.status=="success"){
-       window.location.href=window.location.href;
+       window.location.href = result.url;
+    //    window.location.href=window.location.href;
         //jQuery('#frmLogin')[0].reset();
         //jQuery('#thank_you_msg').html(result.msg);
       }
@@ -541,7 +551,7 @@ function show_login_popup(){
 
 jQuery('#frmForgot').submit(function(e){
   jQuery('#forgot_msg').html("Please wait...");
-  
+
   e.preventDefault();
   jQuery.ajax({
     url:'/forgot_password',
@@ -587,7 +597,7 @@ function applyCouponCode(){
           jQuery('#total_price').html('INR '+result.totalPrice);
           jQuery('.apply_coupon_code_box').hide();
         }else{
-          
+
         }
         jQuery('#coupon_code_msg').html(result.msg);
       }
@@ -613,7 +623,7 @@ function remove_coupon_code(){
           jQuery('#total_price').html('INR '+result.totalPrice);
           jQuery('.apply_coupon_code_box').show();
         }else{
-          
+
         }
         jQuery('#coupon_code_msg').html(result.msg);
       }
@@ -624,18 +634,22 @@ function remove_coupon_code(){
 jQuery('#frmPlaceOrder').submit(function(e){
   jQuery('#order_place_msg').html("Please wait...");
   e.preventDefault();
+    // var payment_type = $(this).find('#payment_type :checked').val();
+    var payment_type = $('input[type="radio"]:checked').val();
+    var data_string = jQuery('#frmPlaceOrder').serialize();
+    // data_string += `&payment_type="${payment_type}"`;
   jQuery.ajax({
-    url:'/place_order',
-    data:jQuery('#frmPlaceOrder').serialize(),
+    url : '/place_order',
+    data : data_string,
     type:'post',
     success:function(result){
-      if(result.status=='success'){
-          if(result.payment_url!=''){
-            window.location.href=result.payment_url;
+        if(result.status == 'success'){
+            if(result.payment_url!=''){
+               window.location.href=result.payment_url;
           }else{
             window.location.href="/order_placed";
           }
-         
+
       }
       jQuery('#order_place_msg').html(result.msg);
     }
