@@ -100,7 +100,7 @@ class Logincontroller extends Controller
                     if($status==0){
                         return response()->json(['status'=>"error",'msg'=>'Your account has been deactivated']);
                     }
-                    if(1){
+
                         Session::put('FRONT_USER_LOGIN',true);
                         Session::put('FRONT_USER_ID',$result[0]->id);
                         Session::put('FRONT_USER_NAME',$result[0]->name);
@@ -111,10 +111,6 @@ class Logincontroller extends Controller
                         DB::table('cart')
                             ->where(['user_id'=>$getUserTempId,'user_type'=>'Not-Reg'])
                             ->update(['user_id'=>$result[0]->id,'user_type'=>'Reg']);
-                    }else{
-                        $status="error";
-                        $msg="Please enter valid password";
-                    }
                 }else{
                     $status="error";
                     $msg="Please enter valid email id";
