@@ -108,64 +108,60 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="@yield('dashboard_select')">
-                            <a href="{{url('admin/dashboard')}}">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                        </li>
-                        <li class="@yield('order_select')">
-                            <a href="{{url('admin/order')}}">
-                                <i class="fas fa-shopping-basket"></i>Order</a>
-                        </li>
-                        <li class="@yield('product_review_select')">
-                            <a href="{{url('admin/product_review')}}">
-                            <i class="fas fa-star"></i>Product Review</a>
-                        </li>
-                        <li class="@yield('category_select')">
-                            <a href="{{url('admin/category')}}">
-                                <i class="fas fa-list"></i>Category</a>
-                        </li>
-
-                        <li class="@yield('coupon_select')">
-                            <a href="{{url('admin/coupon')}}">
-                                <i class="fas fa-tag"></i>Coupon</a>
-                        </li>
-
-                        <li class="@yield('size_select')">
-                            <a href="{{url('admin/size')}}">
+                        @if(in_array(session('role'), ['admin','user','manager']))
+                            <li class="@yield('dashboard_select')">
+                                <a href="{{url('admin/dashboard')}}">
+                                    <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            </li>
+                            <li class="@yield('order_select')">
+                                <a href="{{url('admin/order')}}">
+                                    <i class="fas fa-shopping-basket"></i>Order</a>
+                            </li>
+                        @endif
+                        @if(in_array(session('role'), ['admin']))
+                            <li class="@yield('product_review_select')">
+                                <a href="{{url('admin/product_review')}}">
+                                <i class="fas fa-star"></i>Product Review</a>
+                            </li>
+                            <li class="@yield('product_select')">
+                                <a href="{{url('admin/product')}}">
+                                <i class="fa fa-product-hunt"></i>Product</a>
+                            </li>
+                            <li class="@yield('brand_select')">
+                                <a href="{{url('admin/brand')}}">
+                                <i class="fa fa-bold"></i>Brand</a>
+                            </li>
+                            <li class="@yield('tax_select')">
+                                <a href="{{url('admin/tax')}}">
+                                <i class="fas fa-percent"></i>Tax</a>
+                            </li>
+                        @endif
+                        @if(in_array(session('role'), ['admin','manager']))
+                            <li class="@yield('category_select')">
+                                <a href="{{url('admin/category')}}">
+                                    <i class="fas fa-list"></i>Category</a>
+                            </li>
+                            <li class="@yield('coupon_select')">
+                                <a href="{{url('admin/coupon')}}">
+                                    <i class="fas fa-tag"></i>Coupon</a>
+                            </li>
+                            <li class="@yield('size_select')">
+                                <a href="{{url('admin/size')}}">
                                 <i class="fas fa-window-maximize"></i>Size</a>
-                        </li>
-
-                        <li class="@yield('brand_select')">
-                            <a href="{{url('admin/brand')}}">
-                            <i class="fa fa-bold"></i>Brand</a>
-                        </li>
-
-                        <li class="@yield('color_select')">
-                            <a href="{{url('admin/color')}}">
-                            <i class="fas fa-paint-brush"></i>Color</a>
-                        </li>
-
-                        <li class="@yield('tax_select')">
-                            <a href="{{url('admin/tax')}}">
-                            <i class="fas fa-percent"></i>Tax</a>
-                        </li>
-
-                        <li class="@yield('product_select')">
-                            <a href="{{url('admin/product')}}">
-                            <i class="fa fa-product-hunt"></i>Product</a>
-                        </li>
-
-                        <li class="@yield('customer_select')">
-                            <a href="{{url('admin/customer')}}">
-                            <i class="fa fa-user"></i>Customer</a>
-                        </li>
-
-                        <li class="@yield('home_banner_select')">
-                            <a href="{{url('admin/home_banner')}}">
-                            <i class="fas fa-images"></i>Home Banner</a>
-                        </li>
-
-
+                            </li>
+                            <li class="@yield('customer_select')">
+                                <a href="{{url('admin/customer')}}">
+                                <i class="fa fa-user"></i>Customer</a>
+                            </li>
+                            <li class="@yield('home_banner_select')">
+                                <a href="{{url('admin/home_banner')}}">
+                                <i class="fas fa-images"></i>Home Banner</a>
+                            </li>
+                            <li class="@yield('color_select')">
+                                <a href="{{url('admin/color')}}">
+                                <i class="fas fa-paint-brush"></i>Color</a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>
@@ -186,14 +182,14 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Welcome Admin</a>
+                                            <a class="js-acc-btn" href="#">Welcome  <?=ucwords(session()->get('role'))?> </a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
 
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
+                                                        <i class="zmdi zmdi-account"></i>Account ( <?=session()->get('role'); ?> )</a>
                                                 </div>
 
                                             </div>
@@ -250,5 +246,9 @@
 
     <script src="{{asset('admin_assets/js/main.js')}}"></script>
     <script src="{{asset('admin_assets/js/custom_js.js')}}"></script>
+    <script>
+    //copy desktop to mobile view sidebar
+    $('.navbar-mobile__list').html($('.navbar__list').html());
+    </script>
 </body>
 </html>

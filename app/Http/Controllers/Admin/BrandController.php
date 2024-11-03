@@ -87,6 +87,9 @@ class BrandController extends Controller
     }
 
     public function delete(Request $request,$id){
+        // if (session('role') !== 'admin') {
+        //     return redirect()->back()->with('error', 'Unauthorized action.');
+        // }
         $model=brand::find($id);
         $model->delete();
         $request->session()->flash('message','Brand deleted');

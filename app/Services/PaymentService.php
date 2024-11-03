@@ -32,7 +32,7 @@ class PaymentService// extends Controller
             'currency' => $currency,
             'receipt' => $receipt
         );
-        $ch = curl_init();
+        /*$ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/orders');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -54,14 +54,14 @@ class PaymentService// extends Controller
         }
         curl_close($ch);
         return $response;
-        die(78989);
-        /*return $this->razorpay->order->create([
+        die(78989);*/
+        return $this->razorpay->order->create([
             'amount' => $amount, // Amount in paise (100 paise = 1 INR)
             'currency' => $currency,
             'receipt' => $receipt,
             ],
             ['verify' => 'F:/xampp software/php/extras/ssl/cacert.pem']
-        );*/
+        );
     }
 
     /**

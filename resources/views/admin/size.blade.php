@@ -4,12 +4,12 @@
 @section('container')
     @if(session()->has('message'))
     <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-        {{session('message')}}  
+        {{session('message')}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">×</span>
         </button>
-    </div> 
-    @endif                           
+    </div>
+    @endif
     <h1 class="mb10">Size</h1>
     <a href="{{url('admin/size/manage_size')}}">
         <button type="button" class="btn btn-success">
@@ -52,5 +52,5 @@
             <!-- END DATA TABLE-->
         </div>
     </div>
-                        
+
 @endsection

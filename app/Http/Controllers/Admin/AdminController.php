@@ -30,7 +30,7 @@ class AdminController extends Controller
         }else{
             return view('admin.login');
         }
-        return view('admin.login');
+        // return view('admin.login');
     }
 
     public function auth(Request $request)
@@ -44,6 +44,10 @@ class AdminController extends Controller
             if(Hash::check($request->post('password'),$result->password)){
                 $request->session()->put('ADMIN_LOGIN',true);
                 $request->session()->put('ADMIN_ID',$result->id);
+                $request->session()->put('role',$result->user_type);
+                // echo session()->get('role');
+                // dd(session()->all());
+                // dd(Session::all());
                 return redirect('admin/dashboard');
             }else{
                 $request->session()->flash('error','Please enter correct password');

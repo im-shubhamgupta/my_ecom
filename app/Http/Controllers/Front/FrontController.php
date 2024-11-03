@@ -601,6 +601,11 @@ class FrontController extends Controller
     public function place_order(Request $request)
     {
         // print_r($request->all());
+        // Mail::send('front/password_send',$data,function($messages) use ($user){
+        //             $messages->to($user['to']);
+        //             $messages->subject('New Password');
+        //         });
+
         $payment_url='';
         $rand_id=rand(111111111,999999999);
 
@@ -766,7 +771,7 @@ class FrontController extends Controller
             $status="false";
             $msg="Please try after sometime";
         }
-        die('stop');
+        //die('stop');
         return response()->json(['status'=>$status,'msg'=>$msg,'payment_url'=>$payment_url]);
     }
 

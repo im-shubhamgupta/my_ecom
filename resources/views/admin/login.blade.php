@@ -40,12 +40,12 @@
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
                                 
                                 @if(session()->has('error'))
-                                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-                                    {{session('error')}}  
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div> 
+                                    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                                        {{session('error')}}  
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div> 
                                 @endif 	
                             </form>
                         </div>
